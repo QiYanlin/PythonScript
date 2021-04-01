@@ -46,6 +46,8 @@ def check_data():
             if i > 1 and row[18][0:3] == '租赁费':
                 data_flag = 0
                 date_arr = sub_str(row[21]).split('-')
+                if len(date_arr) != 2:
+                    check_flag = data_flag = 1
                 for d in date_arr:
                     try:
                         datetime.datetime.strptime(d, '%Y.%m.%d')
