@@ -74,9 +74,9 @@ def read():
                     date_arr[1] = '0' + date_arr[1]
                 if len(date_arr) == 1 and len(date_arr[0]) == 1:
                     date_arr[0] = '0' + date_arr[0]
-                data = [row[2], row[4], row[3], '-'.join(date_arr), row[21], '付' + row[3] + row[21], row[18], row[19],
-                        datetime.datetime.strptime(row[8], '%Y-%m-%d').strftime('%Y-%m-%d'), '0', '0', '', '', '',
-                        row[10], '', row[19]]
+                data = [row[2], row[4], row[3], '-'.join(date_arr).split(' ')[0], row[21], '付' + row[3] + row[21],
+                        row[18], row[19], datetime.datetime.strptime(row[8], '%Y-%m-%d').strftime('%Y-%m-%d'), '0', '0',
+                        '', '', '', row[10], '', row[6]]
                 if row[18][0:3] == '租赁费':
                     date_arr = sub_str(row[21]).split('-')
                     start = datetime.datetime.strptime(date_arr[0], '%Y.%m.%d')
@@ -128,17 +128,17 @@ def read():
                     excelData.append([num1, num2, l2[0], l2[1], l2[2], l2[3], l2[4], l2[5], '预付', l2[10], l2[8], l2[11],
                                       l2[12], l2[13], l2[14], l2[15]])
             num1 += 1
-            excelData.append([num1, num2, last_data[0], last_data[1], last_data[2], last_data[3], '',
-                              ','.join(row_data), '银行存款', last_data[16], last_data[8], '', '', '', last_data[14],
-                              '保证金' if num1 == 2 and expense[0:2] == '押金' else '未回'])
+            excelData.append([num1, num2, last_data[0], last_data[1], last_data[2], last_data[3], ','.join(row_data),
+                              '付' + last_data[2] + ','.join(row_data), '银行存款', last_data[16], last_data[8], '', '', '',
+                              last_data[14], '保证金' if num1 == 2 and expense[0:2] == '押金' else '未回'])
             row_data = []
             last_data_2 = []
             num1 = 0
             num2 += 1
         last_data = temp[i][:]
         expense = last_data[6]
-        if last_data[5] not in row_data:
-            row_data.append(last_data[5])
+        if last_data[4] not in row_data:
+            row_data.append(last_data[4])
         if last_data[10] != '0':
             last_data_2.append(temp[i][:])
         if temp[i][6][0:3] == '租赁费' and (temp[i][7] == '0' or temp[i][7] == '0.00'):
@@ -156,8 +156,9 @@ def read():
             excelData.append([num1, num2, l2[0], l2[1], l2[2], l2[3], l2[4], l2[5], '预付', l2[10], l2[8], l2[11], l2[12],
                               l2[13], l2[14], l2[15]])
     num1 += 1
-    excelData.append([num1, num2, last_data[0], last_data[1], '', '', '', ','.join(row_data), '银行存款', last_data[16],
-                      last_data[8], '', '', '', last_data[14], '保证金' if num1 == 2 and expense[0:2] == '押金' else '未回'])
+    excelData.append([num1, num2, last_data[0], last_data[1], last_data[2], last_data[3], ','.join(row_data),
+                      '付' + last_data[2] + ','.join(row_data), '银行存款', last_data[16], last_data[8], '', '', '',
+                      last_data[14], '保证金' if num1 == 2 and expense[0:2] == '押金' else '未回'])
 
 
 def sheet1():
