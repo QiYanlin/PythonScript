@@ -14,7 +14,7 @@ def read():
     del data[0], data[0]
     lens = len(data)
     print('总共' + str(lens) + '条数据')
-    column = 21
+    column = 22
     for row in range(0, int(lens / column)):
         arr = data[row * column:(row + 1) * column]
         if row == 0:
