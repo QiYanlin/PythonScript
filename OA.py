@@ -81,7 +81,7 @@ def read():
                     date_arr = sub_str(row[21]).split('-')
                     start = datetime.datetime.strptime(date_arr[0], '%Y.%m.%d')
                     end = datetime.datetime.strptime(date_arr[1], '%Y.%m.%d')
-                    if (end - start).days < 25:
+                    if (end - start).days < 17:
                         data[9] = data[7]
                     else:
                         if get_month(time, start) > 1:
