@@ -48,9 +48,12 @@ def check_data():
                 date_arr = sub_str(row[21]).split('-')
                 if len(date_arr) != 2:
                     check_flag = data_flag = 1
-                for d in date_arr:
+                else:
                     try:
-                        datetime.datetime.strptime(d, '%Y.%m.%d')
+                        start = datetime.datetime.strptime(date_arr[0], '%Y.%m.%d')
+                        end = datetime.datetime.strptime(date_arr[1], '%Y.%m.%d')
+                        if start > end:
+                            check_flag = data_flag = 1
                     except ValueError:
                         check_flag = data_flag = 1
                 if data_flag == 1:
