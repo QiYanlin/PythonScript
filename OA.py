@@ -89,16 +89,19 @@ def read():
                     start = datetime.datetime.strptime(date_arr[0], '%Y.%m.%d')
                     end = datetime.datetime.strptime(date_arr[1], '%Y.%m.%d')
                     if (end - start).days < 25:
-                        data[9] = data[7]
-                        if datetime.datetime.strptime(date_arr[0], '%Y.%m.01') == time + relativedelta(months=+1):
+                        month = datetime.datetime.strptime(re.sub(r'(\d+$)', '01', date_arr[0]), '%Y.%m.%d')
+                        if month >= time + relativedelta(months=+1):
                             attention_str = '注意'
+                            data[10] = data[7]
+                        else:
+                            data[9] = data[7]
                     else:
                         if get_month(time, start) > 1:
                             data[10] = data[7]
                         elif get_month(time, end) > 1:
                             data[10] = str((Decimal(get_month(time, end) - 1) / Decimal(get_month(start, end))
                                             * Decimal(data[7])).quantize(Decimal('0.00')))
-                            data[9] = str(Decimal(row[19]) - Decimal(data[10]))
+                            data[9] = str(Decimal(row[8]) - Decimal(data[10]))
                         else:
                             data[9] = data[7]
 
@@ -164,7 +167,7 @@ def sheet1():
     excelData.insert(0, title)
     for i in range(0, len(excelData)):
         for x in range(0, len(excelData[i])):
-            if i != 0 and (x == 0 or x == 1 or x == 9):
+            if i != 0 and (x == 0 or x == 1 or x == 11):
                 ga.write_number(i, x, float(excelData[i][x]))
             else:
                 ga.write(i, x, excelData[i][x])
@@ -220,7 +223,7 @@ def add_km_data(data_arr):
             'fzhs2': ''
         },
         {
-            'ykbc': '费用支出/服务费',
+            'ykbc': '费用支出/服务费/运营服务费',
             'kmbm': '66012005',
             'fzhs1': '100056:部门档案',
             'fzhs2': '00005:渠道'
@@ -256,14 +259,20 @@ def add_km_data(data_arr):
             'fzhs2': ''
         },
         {
-            'ykbc': '办公费',
-            'kmbm': '66010302',
+            'ykbc': '费用支出／办公费／其他',
+            'kmbm': '66010399',
             'fzhs1': '100056:部门档案',
             'fzhs2': '00005:渠道'
         },
         {
-            'ykbc': '清洁费',
+            'ykbc': '费用支出／清洁卫生费',
             'kmbm': '660105',
+            'fzhs1': '100056:部门档案',
+            'fzhs2': '00005:渠道'
+        },
+        {
+            'ykbc': '费用支出／邮电费／网络通讯费',
+            'kmbm': '66011003',
             'fzhs1': '100056:部门档案',
             'fzhs2': '00005:渠道'
         },
