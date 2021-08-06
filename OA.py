@@ -80,9 +80,9 @@ def read():
                 if len(date_arr) == 1 and len(date_arr[0]) == 1:
                     date_arr[0] = '0' + date_arr[0]
                 store_arr = get_store_arr(row[0])
-                data = [row[1], row[2], store_arr[0], '-'.join(date_arr).split(' ')[0], row[9], '付' + row[0] + row[9],
-                        row[7], row[8], datetime.datetime.strptime(row[5], '%Y-%m-%d').strftime('%Y-%m-%d'), '0', '0',
-                        '', '', '', row[4], '', row[3], store_arr[1]]
+                data = [row[1], row[2], store_arr[0], '-'.join(date_arr).split(' ')[0], row[9], '付' + store_arr[0] +
+                        row[9], row[7], row[8], datetime.datetime.strptime(row[5], '%Y-%m-%d').strftime('%Y-%m-%d'),
+                        '0', '0', '', '', '', row[4], '', row[3], store_arr[1]]
                 attention_str = ''
                 if '租赁费' in row[7]:
                     date_arr = sub_str(row[9]).split('-')
@@ -321,8 +321,8 @@ def append_row(last_data, last_data_2, row_data, expense, num1, num2):
     if last_data_2:
         for l2 in last_data_2:
             num1 += 1
-            excelData.append(add_km_data([num1, num2, l2[0], l2[1], l2[2], l2[3], l2[4], l2[5], '预付', l2[11], l2[8], '',
-                                          l2[12], l2[13], l2[14], l2[15], l2[16], '']))
+            excelData.append(add_km_data([num1, num2, l2[0], l2[1], l2[2], l2[3], l2[4], l2[5], '预付', l2[11], l2[8],
+                                          l2[9], l2[12], l2[13], l2[14], l2[15], l2[16], '']))
     num1 += 1
     excelData.append(add_km_data([num1, num2, last_data[0], last_data[1], last_data[2], last_data[3],
                                   ','.join(row_data), '付' + last_data[2] + ','.join(row_data), last_data[18],
